@@ -1,0 +1,51 @@
+﻿@model SystemADM.Models.Note
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+<h2>Szczegóły notatki</h2>
+
+<div>
+    <h4>Notatka</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tresc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tresc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.data_wpisania)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.data_wpisania)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.users.imie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.users.imie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.zgloszenia.temat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.zgloszenia.temat)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.id_notatki})
+    @Html.ActionLink("Powrót do listy notatek", "Index")
+</p>

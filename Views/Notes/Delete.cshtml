@@ -1,0 +1,57 @@
+﻿@model SystemADM.Models.Note
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+<h2>Usuwanie notatki</h2>
+
+<h3>Jesteś pewien, że chcesz usunąć tę notatkę?</h3>
+<div>
+    <h4>Notatka</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tresc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tresc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.data_wpisania)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.data_wpisania)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.users.imie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.users.imie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.zgloszenia.temat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.zgloszenia.temat)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Powrót do listy notatek", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,51 @@
+﻿@model SystemADM.Models.Building
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+<h2>Szczegóły nieruchomości</h2>
+
+<div>
+    <h4>Budynki</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nazwa_wspolnoty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nazwa_wspolnoty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ulica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ulica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.miasto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.miasto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.kod_pocztowy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kod_pocztowy)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.id_budynek }) |
+    @Html.ActionLink("Powrót do listy budynków", "Index")
+</p>

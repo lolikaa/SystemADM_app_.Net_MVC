@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dc1cf37c39b34eada8cbae82511497d7" Name="Diagram1">
+        <EntityTypeShape EntityType="ADMsystemModel.Building" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ADMsystemModel.Note" Width="1.5" PointX="7.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ADMsystemModel.Role" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ADMsystemModel.Status" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ADMsystemModel.User" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ADMsystemModel.Ticket" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <AssociationConnector Association="ADMsystemModel.FK__zgloszeni__id_bu__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="ADMsystemModel.FK__notatki__id_uzyt__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="ADMsystemModel.FK__notatki__id_zglo__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="ADMsystemModel.FK__users__id_rola__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="ADMsystemModel.FK__zgloszeni__id_st__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="ADMsystemModel.FK__zgloszeni__id_uz__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="ADMsystemModel.users_buildings" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

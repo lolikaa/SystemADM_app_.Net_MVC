@@ -1,0 +1,78 @@
+﻿@model IEnumerable<SystemADM.Models.Ticket>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+<h2>Zgłoszenia</h2>
+<br />
+<br />
+<p>
+    @Html.ActionLink("Dodaj nowe zgłoszenie", "Create")
+</p>
+<br />
+@using (Html.BeginForm())
+{
+    <p>
+        Wyszukaj po temacie: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+    @*<p>
+            @Html.CheckBox("showClosed", false)
+            <label for="showClosed">Czy wyświetlić zamknięte zgłoszenia?</label>
+        <input type="submit" value="Pokaż"/>
+    </p>*@
+}
+
+<table class="table">
+    <tr>
+        <th scope="col">
+            @Html.DisplayNameFor(model => model.id_zgloszenia)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(model => model.temat)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(model => model.data_zgloszenia)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(model => model.id_budynek)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(model => model.id_status)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(model => model.id_uzytkownik)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_zgloszenia)
+            </td>
+            <td>
+                <a href="@Url.Action("Details", new { id= item.id_zgloszenia})">@Html.DisplayFor(modelItem => item.temat)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.data_zgloszenia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.budynki.nazwa_wspolnoty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.statusy.nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.users.FullName)
+            </td>
+
+
+        </tr>
+    }
+
+</table>

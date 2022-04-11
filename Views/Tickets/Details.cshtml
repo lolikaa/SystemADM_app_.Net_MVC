@@ -1,0 +1,141 @@
+﻿@model SystemADM.Models.Ticket
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+
+<div class="container">
+    <h4>Zgłoszenie <b>@Html.DisplayFor(model => model.id_zgloszenia)</b></h4>
+    <hr />
+
+    <table class="table table-borderless">
+        <tbody>
+            <tr>
+                <th>  @Html.DisplayNameFor(model => model.temat) </th>
+                <td>  @Html.DisplayFor(model => model.temat) </td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.opis)</th>
+                <td>  @Html.DisplayFor(model => model.opis) </td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.budynki.nazwa_wspolnoty)</th>
+                <td>  @Html.DisplayFor(model => model.budynki.nazwa_wspolnoty) </td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.data_zgloszenia)</th>
+                <td>  @Html.DisplayFor(model => model.data_zgloszenia) </td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.users.nazwisko)</th>
+                <td>  @Html.DisplayFor(model => model.users.FullName) </td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.statusy.nazwa)</th>
+                <td>  @Html.DisplayFor(model => model.statusy.nazwa) </td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.data_wykonania)</th>
+                <td>
+                    @if ((Model.data_wykonania == null))
+                    {<span>---</span> }
+                    else
+                    { @Html.DisplayFor(model => model.data_wykonania)}
+                </td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.planowana_data_wykonania)</th>
+                <td>
+                    @if ((Model.planowana_data_wykonania == null))
+                    {<span>---</span>}
+                    else
+                    { @Html.DisplayFor(model => model.planowana_data_wykonania)}
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    @if (Session["id_uzytkownik"].ToString() == Model.id_uzytkownik.ToString())
+    {
+        <p>
+            <span> @Html.ActionLink("Edytuj", "Edit", new { id = Model.id_zgloszenia }) </span>
+            <span> @Html.ActionLink("Usuń", "Delete", new { id = Model.id_zgloszenia }) </span>
+        </p>
+    }
+
+
+
+    <h5>Zmień status zgłoszenia</h5>
+<table>
+    <td>
+        <form form action=@Url.Action("UpdateStatus", "Tickets") method="post">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.id_zgloszenia)
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.DropDownList("id_status", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.id_status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+</td>
+    <td>
+        <input type="submit" value="Zapisz" class="btn btn-outline-dark" />
+        </form>
+    </td>
+ 
+</table>
+    <br /><br />
+</div>
+
+<!-- notatki -->
+<div class="row">
+    <div class="card">
+        <div class="card-header">
+            Notatki do zgłoszenia
+        </div>
+
+        <div class="card-body">
+            @if (Model.notatki.Count == 0)
+            {
+                <p>Brak notatek do tego zgłoszenia</p>
+                <hr />
+            }
+            else
+            {
+                foreach (var note in Model.notatki)
+                {
+                    <p>@note.tresc</p>
+                    <small>@note.users.nazwisko, @note.data_wpisania</small>
+                    <hr />
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<form action=@Url.Action("Create", "Notes") method="post">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(id_zgloszenia => Model.id_zgloszenia)
+    @Html.HiddenFor(id_uzytkownik => Model.id_uzytkownik)
+    <div class="form-group">
+        <label for="notatka">Dodaj nową notatkę</label>
+        <div class="row">
+            <textarea class="form-control col-3" id="notatka" rows="3" name="tresc"></textarea>
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-warning">Dodaj notatkę</button>
+</form>
+
+<!--koniec notatek -->
+
+<br />
+<br />
+<div class="container">
+    <p>
+        @Html.ActionLink("Powrót do listy", "Index")
+    </p>
+</div>

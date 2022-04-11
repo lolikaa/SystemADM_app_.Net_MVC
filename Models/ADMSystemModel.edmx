@@ -1,0 +1,524 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ADMsystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="budynki">
+          <Key>
+            <PropertyRef Name="id_budynek" />
+          </Key>
+          <Property Name="id_budynek" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nazwa_wspolnoty" Type="varchar" MaxLength="255" />
+          <Property Name="ulica" Type="varchar" MaxLength="45" />
+          <Property Name="miasto" Type="varchar" MaxLength="45" />
+          <Property Name="kod_pocztowy" Type="varchar" MaxLength="6" />
+        </EntityType>
+        <EntityType Name="notatki">
+          <Key>
+            <PropertyRef Name="id_notatki" />
+          </Key>
+          <Property Name="id_notatki" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_uzytkownik" Type="int" Nullable="false" />
+          <Property Name="id_zgloszenia" Type="int" Nullable="false" />
+          <Property Name="tresc" Type="varchar" MaxLength="255" />
+          <Property Name="data_wpisania" Type="date" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="id_rola" />
+          </Key>
+          <Property Name="id_rola" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="typ_uzytkownika" Type="varchar" MaxLength="45" />
+          <Property Name="dodawanie_zgloszen" Type="bit" Nullable="false" />
+          <Property Name="zamykanie_zgloszen" Type="bit" Nullable="false" />
+          <Property Name="wszystkie_nieruchomosci" Type="bit" Nullable="false" />
+          <Property Name="dodawanie_nieruchomosci" Type="bit" Nullable="false" />
+          <Property Name="dodawanie_uzytkownikow" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="statusy">
+          <Key>
+            <PropertyRef Name="id_status" />
+          </Key>
+          <Property Name="id_status" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nazwa" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id_uzytkownik" />
+          </Key>
+          <Property Name="id_uzytkownik" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_rola" Type="int" Nullable="false" />
+          <Property Name="imie" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="nazwisko" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="telefon" Type="varchar" MaxLength="15" />
+          <Property Name="data_rejestracji" Type="date" Nullable="false" />
+          <Property Name="haslo" Type="char" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users_buildings">
+          <Key>
+            <PropertyRef Name="id_uzytkownik" />
+            <PropertyRef Name="id_budynek" />
+          </Key>
+          <Property Name="id_uzytkownik" Type="int" Nullable="false" />
+          <Property Name="id_budynek" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="zgloszenia">
+          <Key>
+            <PropertyRef Name="id_zgloszenia" />
+          </Key>
+          <Property Name="id_zgloszenia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_status" Type="int" Nullable="false" />
+          <Property Name="id_uzytkownik" Type="int" Nullable="false" />
+          <Property Name="id_budynek" Type="int" Nullable="false" />
+          <Property Name="temat" Type="varchar" MaxLength="45" />
+          <Property Name="opis" Type="varchar" MaxLength="255" />
+          <Property Name="data_zgloszenia" Type="date" />
+          <Property Name="data_wykonania" Type="date" />
+          <Property Name="planowana_data_wykonania" Type="date" />
+        </EntityType>
+        <Association Name="FK__notatki__id_uzyt__36B12243">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="notatki" Type="Self.notatki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id_uzytkownik" />
+            </Principal>
+            <Dependent Role="notatki">
+              <PropertyRef Name="id_uzytkownik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__notatki__id_zglo__35BCFE0A">
+          <End Role="zgloszenia" Type="Self.zgloszenia" Multiplicity="1" />
+          <End Role="notatki" Type="Self.notatki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="zgloszenia">
+              <PropertyRef Name="id_zgloszenia" />
+            </Principal>
+            <Dependent Role="notatki">
+              <PropertyRef Name="id_zgloszenia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users__id_rola__2A4B4B5E">
+          <End Role="role" Type="Self.role" Multiplicity="1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="id_rola" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="id_rola" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users_bui__id_bu__4E88ABD4">
+          <End Role="budynki" Type="Self.budynki" Multiplicity="1" />
+          <End Role="users_buildings" Type="Self.users_buildings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="budynki">
+              <PropertyRef Name="id_budynek" />
+            </Principal>
+            <Dependent Role="users_buildings">
+              <PropertyRef Name="id_budynek" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users_bui__id_uz__4D94879B">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="users_buildings" Type="Self.users_buildings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id_uzytkownik" />
+            </Principal>
+            <Dependent Role="users_buildings">
+              <PropertyRef Name="id_uzytkownik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__zgloszeni__id_bu__2D27B809">
+          <End Role="budynki" Type="Self.budynki" Multiplicity="1" />
+          <End Role="zgloszenia" Type="Self.zgloszenia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="budynki">
+              <PropertyRef Name="id_budynek" />
+            </Principal>
+            <Dependent Role="zgloszenia">
+              <PropertyRef Name="id_budynek" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__zgloszeni__id_st__2F10007B">
+          <End Role="statusy" Type="Self.statusy" Multiplicity="1" />
+          <End Role="zgloszenia" Type="Self.zgloszenia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="statusy">
+              <PropertyRef Name="id_status" />
+            </Principal>
+            <Dependent Role="zgloszenia">
+              <PropertyRef Name="id_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__zgloszeni__id_uz__2E1BDC42">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="zgloszenia" Type="Self.zgloszenia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id_uzytkownik" />
+            </Principal>
+            <Dependent Role="zgloszenia">
+              <PropertyRef Name="id_uzytkownik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ADMsystemModelStoreContainer">
+          <EntitySet Name="budynki" EntityType="Self.budynki" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notatki" EntityType="Self.notatki" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="statusy" EntityType="Self.statusy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users_buildings" EntityType="Self.users_buildings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="zgloszenia" EntityType="Self.zgloszenia" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__notatki__id_uzyt__36B12243" Association="Self.FK__notatki__id_uzyt__36B12243">
+            <End Role="users" EntitySet="users" />
+            <End Role="notatki" EntitySet="notatki" />
+          </AssociationSet>
+          <AssociationSet Name="FK__notatki__id_zglo__35BCFE0A" Association="Self.FK__notatki__id_zglo__35BCFE0A">
+            <End Role="zgloszenia" EntitySet="zgloszenia" />
+            <End Role="notatki" EntitySet="notatki" />
+          </AssociationSet>
+          <AssociationSet Name="FK__users__id_rola__2A4B4B5E" Association="Self.FK__users__id_rola__2A4B4B5E">
+            <End Role="role" EntitySet="role" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__users_bui__id_bu__4E88ABD4" Association="Self.FK__users_bui__id_bu__4E88ABD4">
+            <End Role="budynki" EntitySet="budynki" />
+            <End Role="users_buildings" EntitySet="users_buildings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__users_bui__id_uz__4D94879B" Association="Self.FK__users_bui__id_uz__4D94879B">
+            <End Role="users" EntitySet="users" />
+            <End Role="users_buildings" EntitySet="users_buildings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__zgloszeni__id_bu__2D27B809" Association="Self.FK__zgloszeni__id_bu__2D27B809">
+            <End Role="budynki" EntitySet="budynki" />
+            <End Role="zgloszenia" EntitySet="zgloszenia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__zgloszeni__id_st__2F10007B" Association="Self.FK__zgloszeni__id_st__2F10007B">
+            <End Role="statusy" EntitySet="statusy" />
+            <End Role="zgloszenia" EntitySet="zgloszenia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__zgloszeni__id_uz__2E1BDC42" Association="Self.FK__zgloszeni__id_uz__2E1BDC42">
+            <End Role="users" EntitySet="users" />
+            <End Role="zgloszenia" EntitySet="zgloszenia" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ADMsystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Building">
+          <Key>
+            <PropertyRef Name="id_budynek" />
+          </Key>
+          <Property Name="id_budynek" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nazwa_wspolnoty" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ulica" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="miasto" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="kod_pocztowy" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="zgloszenia" Relationship="Self.FK__zgloszeni__id_bu__2D27B809" FromRole="budynki" ToRole="zgloszenia" />
+          <NavigationProperty Name="users" Relationship="Self.users_buildings" FromRole="budynki" ToRole="users" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="id_notatki" />
+          </Key>
+          <Property Name="id_notatki" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_uzytkownik" Type="Int32" Nullable="false" />
+          <Property Name="id_zgloszenia" Type="Int32" Nullable="false" />
+          <Property Name="tresc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="data_wpisania" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="users" Relationship="Self.FK__notatki__id_uzyt__36B12243" FromRole="notatki" ToRole="users" />
+          <NavigationProperty Name="zgloszenia" Relationship="Self.FK__notatki__id_zglo__35BCFE0A" FromRole="notatki" ToRole="zgloszenia" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id_rola" />
+          </Key>
+          <Property Name="id_rola" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="typ_uzytkownika" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="dodawanie_zgloszen" Type="Boolean" Nullable="false" />
+          <Property Name="zamykanie_zgloszen" Type="Boolean" Nullable="false" />
+          <Property Name="wszystkie_nieruchomosci" Type="Boolean" Nullable="false" />
+          <Property Name="dodawanie_nieruchomosci" Type="Boolean" Nullable="false" />
+          <Property Name="dodawanie_uzytkownikow" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK__users__id_rola__2A4B4B5E" FromRole="role" ToRole="users" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="id_status" />
+          </Key>
+          <Property Name="id_status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nazwa" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="zgloszenia" Relationship="Self.FK__zgloszeni__id_st__2F10007B" FromRole="statusy" ToRole="zgloszenia" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id_uzytkownik" />
+          </Key>
+          <Property Name="id_uzytkownik" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_rola" Type="Int32" Nullable="false" />
+          <Property Name="imie" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nazwisko" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefon" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="data_rejestracji" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="haslo" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="notatki" Relationship="Self.FK__notatki__id_uzyt__36B12243" FromRole="users" ToRole="notatki" />
+          <NavigationProperty Name="role" Relationship="Self.FK__users__id_rola__2A4B4B5E" FromRole="users" ToRole="role" />
+          <NavigationProperty Name="zgloszenia" Relationship="Self.FK__zgloszeni__id_uz__2E1BDC42" FromRole="users" ToRole="zgloszenia" />
+          <NavigationProperty Name="budynki" Relationship="Self.users_buildings" FromRole="users" ToRole="budynki" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="id_zgloszenia" />
+          </Key>
+          <Property Name="id_zgloszenia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_status" Type="Int32" Nullable="false" />
+          <Property Name="id_uzytkownik" Type="Int32" Nullable="false" />
+          <Property Name="id_budynek" Type="Int32" Nullable="false" />
+          <Property Name="temat" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="opis" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="data_zgloszenia" Type="DateTime" Precision="0" />
+          <Property Name="data_wykonania" Type="DateTime" Precision="0" />
+          <Property Name="planowana_data_wykonania" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="budynki" Relationship="Self.FK__zgloszeni__id_bu__2D27B809" FromRole="zgloszenia" ToRole="budynki" />
+          <NavigationProperty Name="notatki" Relationship="Self.FK__notatki__id_zglo__35BCFE0A" FromRole="zgloszenia" ToRole="notatki" />
+          <NavigationProperty Name="statusy" Relationship="Self.FK__zgloszeni__id_st__2F10007B" FromRole="zgloszenia" ToRole="statusy" />
+          <NavigationProperty Name="users" Relationship="Self.FK__zgloszeni__id_uz__2E1BDC42" FromRole="zgloszenia" ToRole="users" />
+        </EntityType>
+        <Association Name="FK__zgloszeni__id_bu__2D27B809">
+          <End Role="budynki" Type="ADMsystemModel.Building" Multiplicity="1" />
+          <End Role="zgloszenia" Type="ADMsystemModel.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="budynki">
+              <PropertyRef Name="id_budynek" />
+            </Principal>
+            <Dependent Role="zgloszenia">
+              <PropertyRef Name="id_budynek" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__notatki__id_uzyt__36B12243">
+          <End Role="users" Type="ADMsystemModel.User" Multiplicity="1" />
+          <End Role="notatki" Type="ADMsystemModel.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id_uzytkownik" />
+            </Principal>
+            <Dependent Role="notatki">
+              <PropertyRef Name="id_uzytkownik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__notatki__id_zglo__35BCFE0A">
+          <End Role="zgloszenia" Type="ADMsystemModel.Ticket" Multiplicity="1" />
+          <End Role="notatki" Type="ADMsystemModel.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="zgloszenia">
+              <PropertyRef Name="id_zgloszenia" />
+            </Principal>
+            <Dependent Role="notatki">
+              <PropertyRef Name="id_zgloszenia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users__id_rola__2A4B4B5E">
+          <End Role="role" Type="ADMsystemModel.Role" Multiplicity="1" />
+          <End Role="users" Type="ADMsystemModel.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="id_rola" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="id_rola" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__zgloszeni__id_st__2F10007B">
+          <End Role="statusy" Type="ADMsystemModel.Status" Multiplicity="1" />
+          <End Role="zgloszenia" Type="ADMsystemModel.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="statusy">
+              <PropertyRef Name="id_status" />
+            </Principal>
+            <Dependent Role="zgloszenia">
+              <PropertyRef Name="id_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__zgloszeni__id_uz__2E1BDC42">
+          <End Role="users" Type="ADMsystemModel.User" Multiplicity="1" />
+          <End Role="zgloszenia" Type="ADMsystemModel.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id_uzytkownik" />
+            </Principal>
+            <Dependent Role="zgloszenia">
+              <PropertyRef Name="id_uzytkownik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="users_buildings">
+          <End Role="budynki" Type="ADMsystemModel.Building" Multiplicity="*" />
+          <End Role="users" Type="ADMsystemModel.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="systemADMEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="budynki" EntityType="ADMsystemModel.Building" />
+          <EntitySet Name="notatki" EntityType="ADMsystemModel.Note" />
+          <EntitySet Name="role" EntityType="ADMsystemModel.Role" />
+          <EntitySet Name="statusy" EntityType="ADMsystemModel.Status" />
+          <EntitySet Name="users" EntityType="ADMsystemModel.User" />
+          <EntitySet Name="zgloszenia" EntityType="ADMsystemModel.Ticket" />
+          <AssociationSet Name="FK__zgloszeni__id_bu__2D27B809" Association="Self.FK__zgloszeni__id_bu__2D27B809">
+            <End Role="budynki" EntitySet="budynki" />
+            <End Role="zgloszenia" EntitySet="zgloszenia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__notatki__id_uzyt__36B12243" Association="Self.FK__notatki__id_uzyt__36B12243">
+            <End Role="users" EntitySet="users" />
+            <End Role="notatki" EntitySet="notatki" />
+          </AssociationSet>
+          <AssociationSet Name="FK__notatki__id_zglo__35BCFE0A" Association="Self.FK__notatki__id_zglo__35BCFE0A">
+            <End Role="zgloszenia" EntitySet="zgloszenia" />
+            <End Role="notatki" EntitySet="notatki" />
+          </AssociationSet>
+          <AssociationSet Name="FK__users__id_rola__2A4B4B5E" Association="Self.FK__users__id_rola__2A4B4B5E">
+            <End Role="role" EntitySet="role" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__zgloszeni__id_st__2F10007B" Association="Self.FK__zgloszeni__id_st__2F10007B">
+            <End Role="statusy" EntitySet="statusy" />
+            <End Role="zgloszenia" EntitySet="zgloszenia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__zgloszeni__id_uz__2E1BDC42" Association="Self.FK__zgloszeni__id_uz__2E1BDC42">
+            <End Role="users" EntitySet="users" />
+            <End Role="zgloszenia" EntitySet="zgloszenia" />
+          </AssociationSet>
+          <AssociationSet Name="users_buildings" Association="Self.users_buildings">
+            <End Role="budynki" EntitySet="budynki" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ADMsystemModelStoreContainer" CdmEntityContainer="systemADMEntities1">
+          <EntitySetMapping Name="budynki">
+            <EntityTypeMapping TypeName="ADMsystemModel.Building">
+              <MappingFragment StoreEntitySet="budynki">
+                <ScalarProperty Name="id_budynek" ColumnName="id_budynek" />
+                <ScalarProperty Name="nazwa_wspolnoty" ColumnName="nazwa_wspolnoty" />
+                <ScalarProperty Name="ulica" ColumnName="ulica" />
+                <ScalarProperty Name="miasto" ColumnName="miasto" />
+                <ScalarProperty Name="kod_pocztowy" ColumnName="kod_pocztowy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notatki">
+            <EntityTypeMapping TypeName="ADMsystemModel.Note">
+              <MappingFragment StoreEntitySet="notatki">
+                <ScalarProperty Name="id_notatki" ColumnName="id_notatki" />
+                <ScalarProperty Name="id_uzytkownik" ColumnName="id_uzytkownik" />
+                <ScalarProperty Name="id_zgloszenia" ColumnName="id_zgloszenia" />
+                <ScalarProperty Name="tresc" ColumnName="tresc" />
+                <ScalarProperty Name="data_wpisania" ColumnName="data_wpisania" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="role">
+            <EntityTypeMapping TypeName="ADMsystemModel.Role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="id_rola" ColumnName="id_rola" />
+                <ScalarProperty Name="typ_uzytkownika" ColumnName="typ_uzytkownika" />
+                <ScalarProperty Name="dodawanie_zgloszen" ColumnName="dodawanie_zgloszen" />
+                <ScalarProperty Name="zamykanie_zgloszen" ColumnName="zamykanie_zgloszen" />
+                <ScalarProperty Name="wszystkie_nieruchomosci" ColumnName="wszystkie_nieruchomosci" />
+                <ScalarProperty Name="dodawanie_nieruchomosci" ColumnName="dodawanie_nieruchomosci" />
+                <ScalarProperty Name="dodawanie_uzytkownikow" ColumnName="dodawanie_uzytkownikow" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="statusy">
+            <EntityTypeMapping TypeName="ADMsystemModel.Status">
+              <MappingFragment StoreEntitySet="statusy">
+                <ScalarProperty Name="id_status" ColumnName="id_status" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="ADMsystemModel.User">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id_uzytkownik" ColumnName="id_uzytkownik" />
+                <ScalarProperty Name="id_rola" ColumnName="id_rola" />
+                <ScalarProperty Name="imie" ColumnName="imie" />
+                <ScalarProperty Name="nazwisko" ColumnName="nazwisko" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="telefon" ColumnName="telefon" />
+                <ScalarProperty Name="data_rejestracji" ColumnName="data_rejestracji" />
+                <ScalarProperty Name="haslo" ColumnName="haslo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="zgloszenia">
+            <EntityTypeMapping TypeName="ADMsystemModel.Ticket">
+              <MappingFragment StoreEntitySet="zgloszenia">
+                <ScalarProperty Name="id_zgloszenia" ColumnName="id_zgloszenia" />
+                <ScalarProperty Name="id_status" ColumnName="id_status" />
+                <ScalarProperty Name="id_uzytkownik" ColumnName="id_uzytkownik" />
+                <ScalarProperty Name="id_budynek" ColumnName="id_budynek" />
+                <ScalarProperty Name="temat" ColumnName="temat" />
+                <ScalarProperty Name="opis" ColumnName="opis" />
+                <ScalarProperty Name="data_zgloszenia" ColumnName="data_zgloszenia" />
+                <ScalarProperty Name="data_wykonania" ColumnName="data_wykonania" />
+                <ScalarProperty Name="planowana_data_wykonania" ColumnName="planowana_data_wykonania" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="users_buildings" TypeName="ADMsystemModel.users_buildings" StoreEntitySet="users_buildings">
+            <EndProperty Name="budynki">
+              <ScalarProperty Name="id_budynek" ColumnName="id_budynek" />
+            </EndProperty>
+            <EndProperty Name="users">
+              <ScalarProperty Name="id_uzytkownik" ColumnName="id_uzytkownik" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

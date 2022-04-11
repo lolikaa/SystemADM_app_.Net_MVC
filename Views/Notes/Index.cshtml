@@ -1,0 +1,59 @@
+﻿@model IEnumerable<SystemADM.Models.Note>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+<h2>Ostatnie Notatki</h2>
+
+<p>
+    @Html.ActionLink("Dodaj nową notatkę", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.tresc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.data_wpisania)
+        </th>
+        <th>
+            @Html.DisplayName("Dodał")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.zgloszenia.temat)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.tresc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.data_wpisania)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.users.FullName)
+        </td>
+        <td>
+            <a href="@Url.Action("Details", "Tickets", new { id= item.id_zgloszenia})"> @Html.DisplayFor(modelItem => item.zgloszenia.temat) </a>
+        </td>
+        <td>
+            @Html.ActionLink("Szczegóły", "Details", new { id = item.id_notatki })
+
+            @if (Session["id_uzytkownik"].ToString() == item.id_uzytkownik.ToString())
+            {
+                @Html.ActionLink("Edytuj", "Edit", new { id = item.id_notatki })
+            }
+                @if (Session["typ_uzytkownika"].ToString() == "admin" || Session["typ_uzytkownika"].ToString() == "super_admin")
+                {
+                    @Html.ActionLink("Usuń", "Delete", new { id = item.id_notatki })
+                }
+            
+            </td>
+    </tr>
+}
+
+</table>

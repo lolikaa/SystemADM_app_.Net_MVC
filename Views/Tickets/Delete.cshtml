@@ -1,0 +1,89 @@
+﻿@model SystemADM.Models.Ticket
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+<h2>Usuwanie zgłoszenia</h2>
+
+<h3>Czy jesteś pewny,że chcesz usunąć to zgłoszenie?</h3>
+<div>
+    <h4>Zgłoszenie nr @Html.DisplayFor(model => model.id_zgloszenia)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.temat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.temat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.opis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.opis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.data_zgloszenia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.data_zgloszenia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.data_wykonania)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.data_wykonania)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.planowana_data_wykonania)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.planowana_data_wykonania)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.budynki.nazwa_wspolnoty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.budynki.nazwa_wspolnoty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.statusy.nazwa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.statusy.nazwa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.users.imie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.users.imie)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" />
+            @Html.ActionLink("Powrót do listy zgłoszeń", "Index")
+        </div>
+    }
+</div>

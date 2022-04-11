@@ -1,0 +1,57 @@
+﻿@model SystemADM.Models.Building
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+<h2>Usuń nieruchomość z bazy</h2>
+
+<h3>Czy na pewno chcesz usunąć te dane z bazy?</h3>
+<div>
+    <h4>Budynek id @Html.DisplayNameFor(model => model.id_budynek)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nazwa_wspolnoty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nazwa_wspolnoty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ulica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ulica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.miasto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.miasto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.kod_pocztowy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kod_pocztowy)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Powrót do listy nieruchomości", "Index")
+        </div>
+    }
+</div>

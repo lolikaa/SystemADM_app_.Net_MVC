@@ -1,0 +1,53 @@
+﻿@model IEnumerable<SystemADM.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/SystemLayout.cshtml";
+}
+
+<h2>Użytkownicy</h2>
+
+<p>
+    @Html.ActionLink("Dodaj nowego użytkownika", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.data_rejestracji)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.role.typ_uzytkownika)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.data_rejestracji)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.role.typ_uzytkownika)
+        </td>
+        <td>
+            @Html.ActionLink("Edytuj", "Edit", new { id=item.id_uzytkownik })
+            @Html.ActionLink("Szczegóły", "Details", new { id=item.id_uzytkownik })
+      @*      @Html.ActionLink("Usuń", "Delete", new { id=item.id_uzytkownik })*@
+        </td>
+    </tr>
+}
+
+</table>

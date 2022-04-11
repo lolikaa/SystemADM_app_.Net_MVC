@@ -12,6 +12,9 @@ Aplikacja zakłada następujące zakresy uprawnień kont:
 
 ![image](https://user-images.githubusercontent.com/36272145/162808266-b94dfd1f-6e6c-4b2f-a08b-d22a96b878a3.png)
 
+![gr1_ClassDiagram](https://user-images.githubusercontent.com/36272145/162809988-5e83058b-38f3-4f60-9acd-6907a0752607.png)
+
+
 ![image](https://user-images.githubusercontent.com/36272145/162809236-4ebea4a5-776f-449b-912c-12e5f23f0788.png)
 
 ![image](https://user-images.githubusercontent.com/36272145/162809368-e4cca490-80d2-4484-8df8-8d30800d90a6.png)
